@@ -1,0 +1,8 @@
+#Product information
+scope: "non-prod"
+
+# AWS Account details
+account_name: ""
+aws_account_id: "417361600516"
+aws_region: "eu-west-1"
+aws_zones: ["a", "b", "c"]
