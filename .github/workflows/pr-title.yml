@@ -1,0 +1,14 @@
+name: PR Title
+
+on:
+  pull_request:
+    types: [opened, edited, reopened, synchronize]
+
+jobs:
+  pr_lint:
+    name: Check Title
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run
+        run: |
+          [[ "${{ github.event.pull_request.title }}" =~ (^Feature-\d*|^Automation*|^FIX*) ]] && exit 0 || exit 1
