@@ -12,8 +12,3 @@ variable "common_tags" {
   type        = map
   description = "Common tags you want applied to all components."
 }
-
-variable "aws_region" {
-  type        = string
-  description = "aws region"
-}

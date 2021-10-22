@@ -10,13 +10,11 @@ include {
 }
 
 terraform {
-  source = "../../../../../modules/aws-s3-static-website"
+  source = "../../../../..//modules/aws-s3-static-website"
 }
 
 inputs = {
 
-  aws_region      = local.account.aws_region
-  
   domain_name     = "polarissquad.fun"
   bucket_name     = "polarissquad.fun"
 

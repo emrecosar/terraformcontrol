@@ -1,5 +1,4 @@
 provider "aws" {
-  version = "${aws_version}"
   region = "${aws_region}"
 
   # Only these AWS Account IDs may be operated on by this template
