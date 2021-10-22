@@ -11,7 +11,7 @@ Emre Cosar's Terraform Control repository to manage cloud components infra-as-co
 
 | Account Number | Account Name |
 | --- | --- |
-| 417361600516 | Emre
+| XXX | Emre
 
 ## Project layout
 
