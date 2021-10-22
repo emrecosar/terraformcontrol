@@ -2,7 +2,6 @@
 scope: "non-prod"
 
 # AWS Account details
-account_name: ""
+account_name: "emrecosarr-admin"
 aws_account_id: "417361600516"
 aws_region: "eu-west-1"
-aws_zones: ["a", "b", "c"]
