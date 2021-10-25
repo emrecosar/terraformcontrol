@@ -4,7 +4,7 @@ on:
 env:
   tf_version: '1.0.9'
   tg_version: '0.35.4'
-  tf_working_dir: 'terraform/terragrunt'
+  tf_working_dir: 'terraform/terragrunt/non-prod/test/apps-infra/polarissquad.fun'
 jobs:
   terragrunt:
     name: 'Terragrunt'
@@ -27,5 +27,6 @@ jobs:
           tf_actions_version: ${{ env.tf_version }}
           tg_actions_version: ${{ env.tg_version }}
           tf_actions_subcommand: 'plan'
+          args: 'run-all'
           tf_actions_working_dir: ${{ env.tf_working_dir }}
           tf_actions_comment: false
