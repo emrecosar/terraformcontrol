@@ -4,7 +4,7 @@ on:
 env:
   tf_version: '1.0.9'
   tg_version: '0.35.4'
-  tf_working_dir: '.'
+  tf_working_dir: 'terraform/terragrunt'
 jobs:
   terragrunt:
     name: 'Terragrunt'
