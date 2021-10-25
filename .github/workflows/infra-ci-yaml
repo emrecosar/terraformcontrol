@@ -73,7 +73,7 @@ jobs:
         id: plan
         if: steps.git_diff.outputs.tg_dirs != ''
         run: |
-          setup-terra-runner.sh && terragrunt-wrapper.sh run-all plan \
+          sudo setup-terra-runner.sh && terragrunt-wrapper.sh run-all plan \
           --terragrunt-non-interactive \
           --terragrunt-parallelism ${TG_PARALLELISM} \
           --terragrunt-working-dir terraform/terragrunt/${{ matrix.config.account }}/${{ matrix.config.env }} \
