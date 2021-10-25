@@ -30,7 +30,7 @@ jobs:
           ref: ${{ github.head_ref }}
       - name: Pre-commit
         id: pre_commit
-        run: setup-terra-runner.sh && pre-commit-check.sh
+        run: sudo setup-terra-runner.sh && pre-commit-check.sh
       - name: Find comment
         uses: ./../../../../external-actions/find-comment
         id: find_comment
