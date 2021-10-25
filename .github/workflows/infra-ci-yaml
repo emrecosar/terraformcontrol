@@ -30,7 +30,11 @@ jobs:
           ref: ${{ github.head_ref }}
       - name: Pre-commit
         id: pre_commit
-        run: ls -al && chmod +x . && sudo setup-terra-runner.sh && sudo pre-commit-check.sh
+        run: |
+          TF_VERSION=$(cat terraform/.terraform-version)  && \
+          TG_VERSION=$(cat terraform/.terragrunt-version) && \
+          tfenv install "${TF_VERSION}" && tfenv use "${TF_VERSION}" && \
+          tgenv install "${TG_VERSION}" && tgenv use "${TG_VERSION}"
       - name: Find comment
         uses: ./../../../../external-actions/find-comment
         id: find_comment
