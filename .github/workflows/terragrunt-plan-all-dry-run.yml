@@ -13,18 +13,18 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
     steps:
-    - uses: actions/checkout@v1
-    - name: Install Terraform
+    - uses: actions/checkout@v2
+    - name: Install tfenv
       run: |
-        brew install tfenv && \
+        brew install tfenv@1.0.9 && \
         tfenv install
-    - name: Get Terraform Versions
+        tfenv us 1.0.9
+    - name: Get tfenv Versions
+      run: tfenv --version
+    - name: Install tgenv
       run: |
-        tfenv --version
-    - name: Install Terragrunt
-      run: |
-        brew install tgenv && \
+        brew install tgenv@0.35.4 && \
         tgenv install
-    - name: Get Terragrunt Versions
-      run: |
-        tgenv --version
+        tgenv use 0.35.4
+    - name: Get tgenv Version
+      run: tgenv --version
