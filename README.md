@@ -11,7 +11,9 @@ Emre Cosar's Terraform Control repository to manage cloud components infra-as-co
 
 | Account Number | Account Name |
 | --- | --- |
-| XXX | Emre
+| ACCOUNT_ID | ACCOUNT_NAME
+
+-- To start working, please update [account.yaml](/terraform/terragrunt/non-prod/account.yaml)'s `aws_account_id` and `aws_region` based on your configurations.
 
 ## Project layout
 
