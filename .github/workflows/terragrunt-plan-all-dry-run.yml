@@ -16,13 +16,13 @@ jobs:
     - uses: actions/checkout@v2
     - name: Install terraform
       run: |
-        brew install terraform@1.0.9
+        brew install terraform
         terraform install
         terraform use 1.0.9
     - name: Get terraform Versions
       run: terraform --version
     - name: Install terragrunt
       run: |
-        brew install terragrunt@0.35.4
+        brew install terragrunt
     - name: Get terragrunt Version
       run: terragrunt --version
