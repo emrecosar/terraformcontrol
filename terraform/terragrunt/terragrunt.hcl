@@ -1,9 +1,9 @@
 
 locals {
   account = try(yamldecode(file("non-prod/account.yaml")), null)
-  
-  tfstate_s3_bucket      = format("%s-terraform-state", local.account.aws_account_id)
-  tfstate_path           = format("%s/terraform.tfstate", path_relative_to_include())
+
+  tfstate_s3_bucket = format("%s-terraform-state", local.account.aws_account_id)
+  tfstate_path      = format("%s/terraform.tfstate", path_relative_to_include())
 }
 
 generate "providers" {
@@ -11,8 +11,8 @@ generate "providers" {
   if_exists = "overwrite_terragrunt"
   contents = templatefile("providers.tpl", {
     # AWS Provider
-    aws_region       = local.account.aws_region
-    aws_account_id   = local.account.aws_account_id
+    aws_region     = local.account.aws_region
+    aws_account_id = local.account.aws_account_id
   })
 }
 

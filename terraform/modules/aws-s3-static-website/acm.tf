@@ -1,6 +1,6 @@
 # SSL Certificate & Validation
 locals {
-  acm_default_region  = "us-east-1"
+  acm_default_region = "us-east-1"
 }
 provider "aws" {
   alias  = "acm_provider"

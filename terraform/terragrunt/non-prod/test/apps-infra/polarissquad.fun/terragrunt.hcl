@@ -1,7 +1,7 @@
 locals {
   account = yamldecode(file(find_in_parent_folders("account.yaml")))
 
-  owner = "Emre Cosar"
+  owner   = "Emre Cosar"
   project = "polarissquad.fun"
 }
 
@@ -15,11 +15,11 @@ terraform {
 
 inputs = {
 
-  domain_name     = "polarissquad.fun"
-  bucket_name     = "polarissquad.fun"
+  domain_name = "polarissquad.fun"
+  bucket_name = "polarissquad.fun"
 
-  common_tags     = { 
-    "Owner" = "Emre Cosar"
+  common_tags = {
+    "Owner"   = "Emre Cosar"
     "Project" = "polarissquad.fun"
   }
 
