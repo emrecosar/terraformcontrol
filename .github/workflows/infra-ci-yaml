@@ -1,120 +1,48 @@
-# The purpose of this workflow is to run Terragrunt Plan for all affected components in a PR
-name: Infra CI
-
+name: 'Terragrunt GitHub Actions'
 on:
-  # Runs the workflow on PR changes (opened and commit added)
-  pull_request:
-    branches:
-      - main
-    paths:
-      - ".github/workflows/**"
-      - "terraform/**"
-
+  - pull_request
 env:
-  TF_IN_AUTOMATION: true
-  TERRAGRUNT_DOWNLOAD: "/home/runner/cache/terragrunt"
-  TG_PARALLELISM: 20
-
+  tf_version: '1.0.9'
+  tg_version: '0.35.4'
+  tf_working_dir: '.'
 jobs:
-  code_check:
-    name: Code Check
+  terragrunt:
+    name: 'Terragrunt'
     runs-on: ubuntu-latest
     steps:
-      - name: Add scripts to PATH
-        run: echo "${GITHUB_WORKSPACE}/.github/workflows/scripts/" >> $GITHUB_PATH
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: 'Checkout'
+        uses: actions/checkout@master
+      - name: 'Terragrunt Format'
+        uses: the-commons-project/terragrunt-github-actions@master
         with:
-          clean: true
-          fetch-depth: 0
-          ref: ${{ github.head_ref }}
-      - name: Pre-commit
-        id: pre_commit
-        run: |
-          TF_VERSION=$(cat terraform/.terraform-version)  && \
-          TG_VERSION=$(cat terraform/.terragrunt-version) && \
-          tfenv install "${TF_VERSION}" && tfenv use "${TF_VERSION}" && \
-          tgenv install "${TG_VERSION}" && tgenv use "${TG_VERSION}"
-      - name: Find comment
-        uses: ./../../../../external-actions/find-comment
-        id: find_comment
+          tf_actions_version: ${{ env.tf_version }}
+          tg_actions_version: ${{ env.tg_version }}
+          tf_actions_binary: 'terraform'
+          tf_actions_subcommand: 'fmt'
+          tf_actions_working_dir: ${{ env.tf_working_dir }}
+          tf_actions_comment: false
+      - name: 'Terragrunt Init'
+        uses: the-commons-project/terragrunt-github-actions@master
         with:
-          issue-number: '${{ tojson(github.event.pull_request.number) }}'
-          body-includes: "## Pre-commit code check :"
-      - name: Add/Update comment
-        uses: ./../../../../external-actions/create-or-update-comment
+          tf_actions_version: ${{ env.tf_version }}
+          tg_actions_version: ${{ env.tg_version }}
+          tf_actions_subcommand: 'init'
+          tf_actions_working_dir: ${{ env.tf_working_dir }}
+          tf_actions_comment: false
+      - name: 'Terragrunt Validate'
+        uses: the-commons-project/terragrunt-github-actions@master
         with:
-          issue-number: '${{ tojson(github.event.pull_request.number) }}'
-          comment-id: '${{ steps.find_comment.outputs.comment-id }}'
-          edit-mode: replace
-          body: '${{ steps.pre_commit.outputs.message }}'
-      - name: Exit
-        run: exit ${{ steps.pre_commit.outputs.exit_code }}
-
-  plan_changes:
-    name: Plan Changes
-    needs: code_check
-    runs-on: ${{ matrix.config.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        config:
-          - { os: [ubuntu-latest, "417361600516"],account: "non-prod",env: "account-resources" }
-          - { os: [ubuntu-latest, test], account: "non-prod", env: "test" }
-    steps:
-      - name: Add scripts to PATH
-        run: echo "${GITHUB_WORKSPACE}/.github/workflows/scripts/" >> $GITHUB_PATH
-      - name: Checkout code
-        uses: actions/checkout@v2
+          tf_actions_version: ${{ env.tf_version }}
+          tg_actions_version: ${{ env.tg_version }}
+          tf_actions_binary: 'terraform'
+          tf_actions_subcommand: 'validate'
+          tf_actions_working_dir: ${{ env.tf_working_dir }}
+          tf_actions_comment: false
+      - name: 'Terragrunt Plan'
+        uses: the-commons-project/terragrunt-github-actions@master
         with:
-          clean: true
-          fetch-depth: 0
-          ref: ${{ github.head_ref }}
-      - name: Git diff
-        id: git_diff
-        run: git-diff.sh origin/main... ${{ matrix.config.account }} ${{ matrix.config.env }}
-      - name: Plan
-        id: plan
-        if: steps.git_diff.outputs.tg_dirs != ''
-        run: |
-          sudo setup-terra-runner.sh && terragrunt-wrapper.sh run-all plan \
-          --terragrunt-non-interactive \
-          --terragrunt-parallelism ${TG_PARALLELISM} \
-          --terragrunt-working-dir terraform/terragrunt/${{ matrix.config.account }}/${{ matrix.config.env }} \
-          --terragrunt-strict-include \
-          ${{ steps.git_diff.outputs.tg_dirs }}
-      - name: Report plan
-        id: plan_report
-        if: steps.git_diff.outputs.tg_dirs != ''
-        run: infra-ci.sh ${{ steps.plan.outputs.exit_code }} ${{ matrix.config.account }}-${{ matrix.config.env }} ${{ matrix.config.account }} ${{ matrix.config.env }}
-      - name: Find comment
-        uses: ./../../../../external-actions/find-comment
-        id: find_comment
-        with:
-          issue-number: '${{ tojson(github.event.pull_request.number) }}'
-          body-includes: "## Plan for account `${{ matrix.config.account }}` in `${{ matrix.config.env }}`"
-      - name: Add/Update comment
-        uses: ./../../../../external-actions/create-or-update-comment
-        id: add_updated_comment
-        if: steps.git_diff.outputs.tg_dirs != ''
-        with:
-          issue-number: '${{ tojson(github.event.pull_request.number) }}'
-          comment-id: '${{ steps.find_comment.outputs.comment-id }}'
-          edit-mode: replace
-          body: '${{ steps.plan_report.outputs.message }}'
-      - name: Empty comment
-        uses: ./../../../../external-actions/create-or-update-comment
-        if: steps.git_diff.outputs.tg_dirs == ''
-        with:
-          issue-number: '${{ tojson(github.event.pull_request.number) }}'
-          comment-id: '${{ steps.find_comment.outputs.comment-id }}'
-          edit-mode: replace
-          body: |
-            ## Plan for account `${{ matrix.config.account }}` in `${{ matrix.config.env }}` :white_circle:
-            No changes have been made.
-      - name: Exit
-        if: steps.git_diff.outputs.tg_dirs != ''
-        run: |
-          echo "Terragrunt Plan exit code: '${{ steps.plan.outputs.exit_code }}'"
-          echo "Plan report exit code: '${{ steps.plan_report.outputs.changes_detected }}'"
-          exit ${{ steps.plan.outputs.exit_code }}
+          tf_actions_version: ${{ env.tf_version }}
+          tg_actions_version: ${{ env.tg_version }}
+          tf_actions_subcommand: 'plan'
+          tf_actions_working_dir: ${{ env.tf_working_dir }}
+          tf_actions_comment: falsefalsefalse
