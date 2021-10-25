@@ -14,16 +14,19 @@ jobs:
       AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
     steps:
     - uses: actions/checkout@v1
-    - name: Install Terraform and Terragrunt
+    - name: Install Terraform
       run: |
-        brew --version && \
         brew install tfenv && \
+        tfenv install
+    - name: Get Terraform Versions
+      run: |
+        terraform --version && \
+        tfenv --version
+    - name: Install Terragrunt
+      run: |
         brew install tgenv && \
-        tfenv install && \
         tgenv install
-    - name: Get Versions
+    - name: Get Terragrunt Versions
       run: |
         terragrunt --version && \
-        terraform --version && \
-        tgenv --version && \
-        tfenv --version
+        tgenv --version
