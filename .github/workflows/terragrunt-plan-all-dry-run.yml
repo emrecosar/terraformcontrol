@@ -14,17 +14,15 @@ jobs:
       AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
     steps:
     - uses: actions/checkout@v2
-    - name: Install tfenv
+    - name: Install terraform
       run: |
-        brew install tfenv
-        tfenv install
-        tfenv use 1.0.9
-    - name: Get tfenv Versions
-      run: tfenv --version
-    - name: Install tgenv
+        brew install terraform@1.0.9
+        terraform install
+        terraform use 1.0.9
+    - name: Get terraform Versions
+      run: terraform --version
+    - name: Install terragrunt
       run: |
-        brew install tgenv
-        tgenv install
-        tgenv use 0.35.4
-    - name: Get tgenv Version
-      run: tgenv --version
+        brew install terragrunt@0.35.4
+    - name: Get terragrunt Version
+      run: terragrunt --version
