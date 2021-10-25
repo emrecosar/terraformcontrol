@@ -1,8 +1,10 @@
 name: Terragrunt Plan All (dry run)
+
 on:
   pull_request:
     branches:
-      - master
+      - main
+
 jobs:
   build:
     runs-on: ubuntu-latest
