@@ -18,7 +18,7 @@ env:
 jobs:
   code_check:
     name: Code Check
-    runs-on: [self-hosted]
+    runs-on: ubuntu-latest
     steps:
       - name: Add scripts to PATH
         run: echo "${GITHUB_WORKSPACE}/.github/workflows/scripts/" >> $GITHUB_PATH
