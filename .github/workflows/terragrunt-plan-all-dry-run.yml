@@ -22,3 +22,6 @@ jobs:
       run: brew install terragrunt
     - name: Get terragrunt Version
       run: terragrunt --version
+
+    - name: Terragrunt plan-all
+      run: terragrunt plan-all
