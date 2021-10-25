@@ -55,8 +55,8 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - { os: [self-hosted, "417361600516"],account: "non-prod",env: "account-resources" }
-          - { os: [self-hosted, test], account: "non-prod", env: "test" }
+          - { os: [ubuntu-latest, "417361600516"],account: "non-prod",env: "account-resources" }
+          - { os: [ubuntu-latest, test], account: "non-prod", env: "test" }
     steps:
       - name: Add scripts to PATH
         run: echo "${GITHUB_WORKSPACE}/.github/workflows/scripts/" >> $GITHUB_PATH
