@@ -1,32 +1,17 @@
-name: 'Terragrunt GitHub Actions'
+name: 'Code Check'
+
 on:
-  - pull_request
-env:
-  tf_version: '1.0.9'
-  tg_version: '0.35.4'
-  tf_working_dir: 'terraform/terragrunt/non-prod/test/apps-infra/polarissquad.fun'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/**"
+      - "terraform/**"
+
 jobs:
-  terragrunt:
-    name: 'Terragrunt'
+  code_check:
+    name: Code Check
     runs-on: ubuntu-latest
     steps:
-      - name: 'Checkout'
-        uses: actions/checkout@master
-      - name: 'Terragrunt Format'
-        uses: the-commons-project/terragrunt-github-actions@master
-        with:
-          tf_actions_version: ${{ env.tf_version }}
-          tg_actions_version: ${{ env.tg_version }}
-          tf_actions_binary: 'terraform'
-          tf_actions_subcommand: 'fmt'
-          tf_actions_working_dir: ${{ env.tf_working_dir }}
-          tf_actions_comment: false
-      - name: 'Terragrunt Plan'
-        uses: the-commons-project/terragrunt-github-actions@master
-        with:
-          tf_actions_version: ${{ env.tf_version }}
-          tg_actions_version: ${{ env.tg_version }}
-          tf_actions_subcommand: 'plan'
-          args: 'run-all'
-          tf_actions_working_dir: ${{ env.tf_working_dir }}
-          tf_actions_comment: false
+      - name: Pre Commit
+        run: brew install pre-commit && pre-commit --version && pre-commit run --all-files

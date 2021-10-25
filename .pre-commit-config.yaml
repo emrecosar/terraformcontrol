@@ -1,6 +1,3 @@
-# exlude commit checks under current configuration
-exclude: "legacy"
-
 repos:
   - repo: git://github.com/pre-commit/pre-commit-hooks
     rev: v3.4.0
