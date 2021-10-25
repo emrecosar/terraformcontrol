@@ -16,14 +16,14 @@ jobs:
     - uses: actions/checkout@v2
     - name: Install tfenv
       run: |
-        brew install tfenv@2.2.2 && \
+        brew install tfenv
         tfenv install
         tfenv use 1.0.9
     - name: Get tfenv Versions
       run: tfenv --version
     - name: Install tgenv
       run: |
-        brew install tgenv@0.0.3 && \
+        brew install tgenv
         tgenv install
         tgenv use 0.35.4
     - name: Get tgenv Version
