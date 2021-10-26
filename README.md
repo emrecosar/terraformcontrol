@@ -1,6 +1,4 @@
-
 [![Terragrunt apply](https://github.com/emrecosar/terraformcontrol/actions/workflows/terragrunt-apply-all.yaml/badge.svg?branch=main)](https://github.com/emrecosar/terraformcontrol/actions/workflows/terragrunt-apply-all.yaml)
-
 
 # terraformcontrol
 
