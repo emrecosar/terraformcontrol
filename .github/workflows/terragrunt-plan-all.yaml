@@ -10,7 +10,12 @@ on:
 
 jobs:
   plan:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.config.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - { os: [ubuntu-latest, "417361600516"],account: "non-prod",env: "test" }
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -26,5 +31,9 @@ jobs:
       - name: Get terragrunt Version
         run: terragrunt --version
 
-      - name: Terragrunt plan-all
-        run: terragrunt plan-all --terragrunt-working-dir terraform/terragrunt/non-prod/test
+      - name: Terragrunt run-all plan
+        run: |
+          terragrunt run-all plan
+          --terragrunt-non-interactive
+          --terragrunt-parallelism 1
+          --terragrunt-working-dir terraform/terragrunt/${{ matrix.config.account }}/${{ matrix.config.env }}
