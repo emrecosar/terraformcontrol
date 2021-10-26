@@ -22,25 +22,23 @@ jobs:
       AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
     steps:
       - uses: actions/checkout@v2
-      - name: Install terraform
-        run: brew install terraform
-      - name: Get terraform Versions
-        run: terraform --version
-      - name: Install terragrunt
-        run: brew install terragrunt
-      - name: Get terragrunt Version
-        run: terragrunt --version
+      - name: Install terraform terragrunt
+        run: brew install terraform terragrunt
+      - name: Get terraform terragrunt versions
+        run: |
+          terraform --version \
+          terragrunt --version
 
       - name: Terragrunt run-all plan
         run: |
-          terragrunt run-all plan
-          --terragrunt-non-interactive
-          --terragrunt-parallelism 1
+          terragrunt run-all plan \
+          --terragrunt-non-interactive \
+          --terragrunt-parallelism 1 \
           --terragrunt-working-dir terraform/terragrunt/${{ matrix.config.account }}/${{ matrix.config.env }}
 
       - name: Terragrunt run-all apply
         run: |
-          terragrunt run-all apply
-          --terragrunt-non-interactive
-          --terragrunt-parallelism 1
+          terragrunt run-all apply \
+          --terragrunt-non-interactive \
+          --terragrunt-parallelism 1 \
           --terragrunt-working-dir terraform/terragrunt/${{ matrix.config.account }}/${{ matrix.config.env }}
