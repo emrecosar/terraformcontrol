@@ -27,7 +27,7 @@ jobs:
         run: terragrunt --version
 
       - name: Terragrunt plan-all
-        run: terragrunt plan-all
+        run: terragrunt plan-all --terragrunt-working-dir terraform/terragrunt/non-prod/test
 
       - name: Terragrunt apply-all
-        run: terragrunt apply-all --terragrunt-non-interactive --terragrunt-parallelism 1
+        run: terragrunt run-all apply --terragrunt-non-interactive --terragrunt-parallelism 1 --terragrunt-working-dir terraform/terragrunt/non-prod/test

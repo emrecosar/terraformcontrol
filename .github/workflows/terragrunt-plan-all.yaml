@@ -27,4 +27,4 @@ jobs:
         run: terragrunt --version
 
       - name: Terragrunt plan-all
-        run: terragrunt plan-all
+        run: terragrunt plan-all --terragrunt-working-dir terraform/terragrunt/non-prod/test
