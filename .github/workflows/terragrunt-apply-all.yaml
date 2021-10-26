@@ -1,7 +1,7 @@
-name: Terragrunt Plan All (dry run)
+name: Terragrunt apply
 
 on:
-  pull_request:
+  push:
     branches:
       - main
     paths:
@@ -29,5 +29,5 @@ jobs:
       - name: Terragrunt plan-all
         run: terragrunt plan-all
 
-      - name: Terragrunt apply
-        run: terragrunt apply
+      - name: Terragrunt apply-all
+        run: terragrunt apply-all --terragrunt-non-interactive --terragrunt-parallelism 1

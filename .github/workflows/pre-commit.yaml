@@ -14,15 +14,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
-        with:
-          python-version: '3.10'
-      - name: install python3.10-dev
-        run: sudo apt install python3.10-dev
-      - name: Python check
-        run: python --version
-      - name: Pre Commit
-        run: |
-          brew install pre-commit
-          pre-commit --version
-          pre-commit run --all-files
+
+      #- uses: actions/setup-python@v2
+      #  with:
+      #    python-version: '3.10'
+      #- name: install python3.10-dev
+      #  run: sudo apt install python3.10-dev
+      #- name: Python check
+      #  run: python --version
+      #- name: Pre Commit
+      #  run: |
+      #    brew install pre-commit
+      #    pre-commit --version
+      #    pre-commit run --all-files
