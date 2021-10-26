@@ -1,3 +1,7 @@
+
+[![PR Title](https://github.com/emrecosar/terraformcontrol/actions/workflows/pr-title.yml/badge.svg?branch=Automation-github-actions-continuous-integration)](https://github.com/emrecosar/terraformcontrol/actions/workflows/pr-title.yml) [![Pre Commit Check](https://github.com/emrecosar/terraformcontrol/actions/workflows/pre-commit.yaml/badge.svg?branch=Automation-github-actions-continuous-integration)](https://github.com/emrecosar/terraformcontrol/actions/workflows/pre-commit.yaml) [![Terragrunt Plan All (dry run)](https://github.com/emrecosar/terraformcontrol/actions/workflows/terragrunt-plan-all.yaml/badge.svg?branch=Automation-github-actions-continuous-integration)](https://github.com/emrecosar/terraformcontrol/actions/workflows/terragrunt-plan-all.yaml)
+
+
 # terraformcontrol
 
 Emre Cosar's Terraform Control repository to manage cloud components infra-as-code
