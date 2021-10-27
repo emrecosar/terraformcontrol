@@ -14,7 +14,7 @@ dependency "step_1" {
 }
 
 terraform {
-  source = "../../../../..//modules/aws-s3-static-website/step-3"
+  source = "../../../../../..//modules/aws-s3-static-website/step-3"
 }
 
 inputs = {

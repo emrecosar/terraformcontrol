@@ -10,7 +10,7 @@ include {
 }
 
 terraform {
-  source = "../../../../..//modules/aws-s3-static-website/step-1"
+  source = "../../../../../..//modules/aws-s3-static-website/step-1"
 }
 
 inputs = {
