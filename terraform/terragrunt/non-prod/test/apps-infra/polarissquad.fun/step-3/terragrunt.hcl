@@ -1,4 +1,3 @@
-/* commented for step 1 to apply
 locals {
   account = yamldecode(file(find_in_parent_folders("account.yaml")))
 
@@ -33,4 +32,3 @@ inputs = {
   }
 
 }
-*/
