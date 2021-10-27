@@ -10,13 +10,12 @@ include {
 }
 
 terraform {
-  source = "../../../../..//modules/aws-s3-static-website"
+  source = "../../../../../..//modules/aws-s3-static-website/step-1"
 }
 
 inputs = {
 
   domain_name = "polarissquad.fun"
-  bucket_name = "polarissquad.fun"
 
   common_tags = {
     "Owner"   = "Emre Cosar"
