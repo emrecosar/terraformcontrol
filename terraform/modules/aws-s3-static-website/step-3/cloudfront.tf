@@ -58,6 +58,10 @@ resource "aws_cloudfront_distribution" "www_s3_distribution" {
   }
 
   tags = var.common_tags
+
+  depends_on = [
+    aws_acm_certificate_validation.cert_validation
+  ]
 }
 
 # Cloudfront S3 for redirect to www.
@@ -112,4 +116,10 @@ resource "aws_cloudfront_distribution" "root_s3_distribution" {
   }
 
   tags = var.common_tags
+
+  depends_on = [
+    aws_acm_certificate_validation.cert_validation,
+    aws_s3_bucket.www_bucket,
+    aws_s3_bucket.root_bucket
+  ]
 }
