@@ -19,7 +19,7 @@ variable "aws_route53_zone_id" {
 }
 
 variable "acm_domain_validation_options" {
-  type        = map(any)
+  type        = set(any)
   description = "ACM domain validation options"
 }
 
