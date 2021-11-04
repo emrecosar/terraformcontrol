@@ -1,4 +1,4 @@
-name: Terragrunt Apply Refresh-All (Manual workflow)
+name: Terragrunt Apply Refresh-Only (Manual workflow)
 
 # Controls when the action will run. Workflow runs when manually triggered using the UI or API.
 on:
@@ -15,9 +15,8 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "greet"
-  apply-refresh-all:
-    # The type of runner that the job will run on
+  # This workflow contains a single job called "apply-refresh-only"
+  apply-refresh-only:
     runs-on: ${{ matrix.config.os }}
     strategy:
       fail-fast: false
@@ -33,7 +32,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Install terraform terragrunt
         run: brew install terraform terragrunt
-      - name: Terragrunt run-all apply -refresh-all
+      - name: Terragrunt run-all apply -refresh-only
         run: |
           terragrunt run-all apply -refresh-only \
           --terragrunt-non-interactive \
