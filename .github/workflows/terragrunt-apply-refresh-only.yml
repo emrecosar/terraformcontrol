@@ -33,7 +33,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Install terraform terragrunt
         run: brew install terraform terragrunt
-      - name: Terragrunt run-all plan
+      - name: Terragrunt run-all apply -refresh-all
         run: |
           terragrunt run-all apply -refresh-all \
           --terragrunt-non-interactive \
