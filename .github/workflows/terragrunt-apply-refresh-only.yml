@@ -35,7 +35,7 @@ jobs:
         run: brew install terraform terragrunt
       - name: Terragrunt run-all apply -refresh-all
         run: |
-          terragrunt run-all apply -refresh-all \
+          terragrunt run-all apply -refresh-only \
           --terragrunt-non-interactive \
           --terragrunt-parallelism 1 \
           --terragrunt-working-dir terraform/terragrunt/${{ matrix.config.account }}/${{ matrix.config.env }}
